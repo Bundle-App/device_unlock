@@ -54,6 +54,8 @@ class DeviceUnlockManager(
     }
 
     fun authenticate(call: MethodCall, result: MethodChannel.Result) {
+        try {
+    
         val error = validate()
         if (error != null) {
             result.error(error.first, error.second, null)
@@ -87,6 +89,10 @@ class DeviceUnlockManager(
         } else {
             activity.startActivityForResult(intent, keyguardRequestCode)
         }
+                 }
+            catch (e: IllegalStateException) {
+  
+                }
     }
 
     companion object {

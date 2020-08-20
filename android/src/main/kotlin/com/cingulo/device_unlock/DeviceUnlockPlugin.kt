@@ -23,6 +23,7 @@ class DeviceUnlockPlugin(registrar: Registrar) : MethodCallHandler {
   }
 
   private fun request(call: MethodCall, result: Result) {
+    
     deviceUnlockManager.authenticate(call, result)
   }
 
