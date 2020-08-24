@@ -62,22 +62,32 @@ class DeviceUnlockManager(
             return
         }
         deviceUnlockCallback = object : DeviceUnlockCallback {
+          
             override fun onSuccess() {
-                if (authInProgress.compareAndSet(true, false)) {
+                try{
+                    if (authInProgress.compareAndSet(true, false)) {
                     result.success(true)
                 }
+                }catch(e:  IllegalStateException){}
+               
             }
 
             override fun onFailure() {
-                if (authInProgress.compareAndSet(true, false)) {
+                  try{
+                   if (authInProgress.compareAndSet(true, false)) {
                     result.success(false)
                 }
+                }catch(e:  IllegalStateException){}
+                
             }
 
             override fun onError(code: String, error: String) {
-                if (authInProgress.compareAndSet(true, false)) {
+                try{
+                    if (authInProgress.compareAndSet(true, false)) {
                     result.error(code, error, null)
-                }
+                } 
+                }catch(e:  IllegalStateException){}
+               
             }
         }
 
